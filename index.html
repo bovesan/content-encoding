@@ -4,13 +4,27 @@
 <meta charset=utf-8>
 <title>Content-Encoding test</title>
 <style>
-pre {
-	padding: 1em;
+pre,
+#resource {
 	background: #eee;
+	padding: 1em;
+	color: #555;
+}
+button {
+	cursor: pointer;
+	border-style: none;
+	font-size: 166%;
+}
+button,
+.response {
+	padding: 1em;
+	background: #089;
+	color: white;
 }
 </style>
 </head>
 <body>
+<a href="https://github.com/bovesan/content-encoding">https://github.com/bovesan/content-encoding</a>
 <h4>Source</h4>
 <pre id="scriptsource"></pre>
 <button onclick="test();">Run test</button>
@@ -21,6 +35,7 @@ pre {
 <h4>Resource source</h4>
 <div id="resource">Not loaded</div>
 <script lang="text/javascript" id="script">function test(){
+	document.getElementById('gzip').classList.add('response');
 	document.getElementById('gzip').innerHTML = 'Testing XMLHttpRequest';
 	const xhr = new XMLHttpRequest();
 	xhr.addEventListener('load', event => {
