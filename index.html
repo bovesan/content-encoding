@@ -4,6 +4,10 @@
 <meta charset=utf-8>
 <title>Content-Encoding test</title>
 <style>
+#test {
+	 display: flex;
+	 align-items: stretch;
+}
 pre,
 #resource {
 	background: #eee;
@@ -12,49 +16,65 @@ pre,
 }
 button {
 	cursor: pointer;
-	border-style: none;
-	font-size: 166%;
 }
 button,
 #response {
+	border-style: none;
+	font-size: 166%;
 	padding: 1em;
-	background: #089;
+	background: #555;
 	color: white;
+}
+#response {
+	flex-grow: 1;
+	align-content: center;
+}
+#response.success {
+	background: #090;
+}
+#response.error {
+	background: #900;
 }
 </style>
 </head>
 <body>
 <p><a href="https://github.com/bovesan/content-encoding">https://github.com/bovesan/content-encoding</a></p>
+<div id="test">
 <button onclick="test();">Run test</button>
-<h4>Response</h4>
-<pre id="response"></pre>
-<h4>Source</h4>
-<pre id="scriptsource"></pre>
+<code id="response"></code>
+</div>
 <h4>curl equivalent</h4>
 <pre id="info"></pre>
 <h4>Resource source</h4>
 <div id="resource">Not loaded</div>
+<script lang="text/javascript">
+const resource = 'resource.exr';
+</script>
 <script lang="text/javascript" id="script">function test(){
 	document.getElementById('response').innerHTML = 'Testing XMLHttpRequest';
 	const xhr = new XMLHttpRequest();
 	xhr.addEventListener('load', event => {
-	    document.getElementById('response').innerHTML = event.target.response;
-	    console.log(event.target.response);
+		if (event.target.response.slice(0, 3).toString() === 'v/1'){
+			document.getElementById('response').classList.add('success');
+			document.getElementById('response').innerHTML = 'Resource was inflated/decompressed properly';
+		} else {
+			document.getElementById('response').classList.add('error');
+			document.getElementById('response').innerHTML = 'Resource was not inflated/decompressed properly';
+		}
 	});
-	xhr.open('GET', 'resource');
+	xhr.open('GET', resource);
 	xhr.send();
 }
 </script>
 <script lang="text/javascript">
+test();
 const xhr = new XMLHttpRequest();
 xhr.addEventListener('load', event => {
     document.getElementById('resource').innerHTML = event.target.response;
-    console.log(event.target.response);
 });
 xhr.open('GET', 'source.php');
 xhr.send();
-document.getElementById('scriptsource').innerHTML = document.getElementById('script').innerHTML;
-document.getElementById('info').innerHTML = 'curl -H "Accept-Encoding: gzip" '+window.location.href+'resource | gunzip ';
+document.getElementById('info').innerHTML = 'curl -H "Accept-Encoding: gzip" '+window.location.href+resource+' | gunzip ';
 </script>
 </body>
 </html>
