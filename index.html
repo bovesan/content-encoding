@@ -16,7 +16,7 @@ button {
 	font-size: 166%;
 }
 button,
-.response {
+#response {
 	padding: 1em;
 	background: #089;
 	color: white;
@@ -24,22 +24,21 @@ button,
 </style>
 </head>
 <body>
-<a href="https://github.com/bovesan/content-encoding">https://github.com/bovesan/content-encoding</a>
-<h4>Source</h4>
-<pre id="scriptsource"></pre>
+<p><a href="https://github.com/bovesan/content-encoding">https://github.com/bovesan/content-encoding</a></p>
 <button onclick="test();">Run test</button>
 <h4>Response</h4>
-<pre id="gzip"></pre>
+<pre id="response"></pre>
+<h4>Source</h4>
+<pre id="scriptsource"></pre>
 <h4>curl equivalent</h4>
 <pre id="info"></pre>
 <h4>Resource source</h4>
 <div id="resource">Not loaded</div>
 <script lang="text/javascript" id="script">function test(){
-	document.getElementById('gzip').classList.add('response');
-	document.getElementById('gzip').innerHTML = 'Testing XMLHttpRequest';
+	document.getElementById('response').innerHTML = 'Testing XMLHttpRequest';
 	const xhr = new XMLHttpRequest();
 	xhr.addEventListener('load', event => {
-	    document.getElementById('gzip').innerHTML = event.target.response;
+	    document.getElementById('response').innerHTML = event.target.response;
 	    console.log(event.target.response);
 	});
 	xhr.open('GET', 'resource');
