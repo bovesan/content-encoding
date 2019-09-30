@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>Content-Encoding test</title>
+<style>
+pre {
+	padding: 1em;
+	background: #eee;
+}
+</style>
+</head>
+<body>
+<h4>Source</h4>
+<pre id="scriptsource"></pre>
+<button onclick="test();">Run test</button>
+<h4>Response</h4>
+<pre id="gzip"></pre>
+<h4>curl equivalent</h4>
+<pre id="info"></pre>
+<h4>Resource source</h4>
+<div id="resource">Not loaded</div>
+<script lang="text/javascript" id="script">function test(){
+	document.getElementById('gzip').innerHTML = 'Testing XMLHttpRequest';
+	const xhr = new XMLHttpRequest();
+	xhr.addEventListener('load', event => {
+	    document.getElementById('gzip').innerHTML = event.target.response;
+	    console.log(event.target.response);
+	});
+	xhr.open('GET', 'gzip');
+	xhr.send();
+}
+</script>
+<script lang="text/javascript">
+const xhr = new XMLHttpRequest();
+xhr.addEventListener('load', event => {
+    document.getElementById('resource').innerHTML = event.target.response;
+    console.log(event.target.response);
+});
+xhr.open('GET', 'gzip?source=true');
+xhr.send();
+document.getElementById('scriptsource').innerHTML = document.getElementById('script').innerHTML;
+document.getElementById('info').innerHTML = 'curl -H "Accept-Encoding: gzip" '+window.location.href+'gzip/ | gunzip ';
+</script>
+</body>
+</html>
