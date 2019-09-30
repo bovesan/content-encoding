@@ -27,7 +27,7 @@ pre {
 	    document.getElementById('gzip').innerHTML = event.target.response;
 	    console.log(event.target.response);
 	});
-	xhr.open('GET', 'gzip');
+	xhr.open('GET', 'resource');
 	xhr.send();
 }
 </script>
@@ -37,10 +37,10 @@ xhr.addEventListener('load', event => {
     document.getElementById('resource').innerHTML = event.target.response;
     console.log(event.target.response);
 });
-xhr.open('GET', 'gzip?source=true');
+xhr.open('GET', 'source.php');
 xhr.send();
 document.getElementById('scriptsource').innerHTML = document.getElementById('script').innerHTML;
-document.getElementById('info').innerHTML = 'curl -H "Accept-Encoding: gzip" '+window.location.href+'gzip/ | gunzip ';
+document.getElementById('info').innerHTML = 'curl -H "Accept-Encoding: gzip" '+window.location.href+'resource | gunzip ';
 </script>
 </body>
 </html>

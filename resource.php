@@ -1,8 +1,4 @@
 <?php
-if ($_GET['source']){
-	show_source(__FILE__, false);
-	exit();
-}
 $output = '';
 // header('Content-type: application/octet-stream');
 if (array_key_exists('Accept-Encoding', apache_request_headers())){

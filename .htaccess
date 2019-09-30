@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^resource resource.php [L]
